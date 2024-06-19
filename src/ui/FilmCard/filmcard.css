@@ -1,0 +1,29 @@
+.filmCard {
+  display: flex;
+  height: 200px;
+  box-shadow: var(--box-shadow);
+}
+
+.filmPoster {
+  min-width: 200px;
+  height: 100%;
+}
+
+.filmName {
+  color: var(--color-accent);
+}
+
+.filmInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 20px;
+}
+
+.filmYear {
+  margin-bottom: auto;
+}
+
+.moreLink {
+  color: var(--color-link);
+}

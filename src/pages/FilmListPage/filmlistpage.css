@@ -1,0 +1,15 @@
+.filmList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.pageNavBtns {
+  display: flex;
+  justify-content: space-between;
+}
+
+.pageBtn {
+  width: 100px;
+  height: 50px;
+}

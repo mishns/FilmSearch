@@ -1,0 +1,32 @@
+.filmFilterForm {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 20px;
+}
+
+.filterOption {
+  font-size: 20px;
+}
+
+.genreSelect {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+}
+
+.genreOption {
+  display: flex;
+  gap: 5px;
+}
+
+.legend {
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
+}
+
+.acceptFilter {
+  width: 100px;
+  height: 100px;
+}

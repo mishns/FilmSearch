@@ -1,0 +1,88 @@
+@import "~normalize.css/normalize.css";
+
+:root {
+  --color-main: #333333;
+  --color-secondary: #ffffff;
+
+  --color-link: blue;
+
+  --color-positive: #A8B64F;
+  --color-negative: #DC3E22;
+
+  --color-grey: #C4C4C4;
+
+  --box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.05), 0 6px 20px 0 rgba(0, 0, 0, 0.05);
+}
+
+:global html {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+:global html,
+:global body {
+  overflow-x: hidden;
+}
+
+:global * {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+:global body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-secondary);
+  font-size: 16px;
+  line-height: 1.2;
+  color: var(--color-main);
+  font-family: 'SF UI Display', serif;
+}
+
+
+:global *,
+:global *::before,
+:global *::after {
+  box-sizing: inherit;
+}
+
+:global a {
+  color: inherit;
+  text-decoration: none;
+}
+
+:global img {
+  max-width: 100%;
+}
+
+:global h1,
+:global h2,
+:global h3 {
+  margin: 0;
+  font-weight: normal;
+}
+
+:global p {
+  margin: 0;
+  padding: 0;
+}
+
+:global ul,
+:global ol {
+  margin: 0;
+  padding: 0;
+  text-indent: 0;
+  list-style: none;
+}
+
+:global button {
+  padding: 0;
+  cursor: pointer;
+}
+
+:global .container {
+  max-width: 700px;
+  margin: 0 auto;
+  width: 100%;
+}
