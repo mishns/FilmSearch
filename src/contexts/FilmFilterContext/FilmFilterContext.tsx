@@ -61,7 +61,7 @@ interface FilmFilterContextProviderProps {
 }
 
 type FilmFilterContextValue = {
-  filmList: FilmList;
+  filmList: FilmList | undefined;
   filterData: FilmFilter;
   isFilmListFetching: boolean;
   isFilmListError: boolean;
@@ -157,7 +157,7 @@ export const FilmFilterContextProvider: FC<FilmFilterContextProviderProps> = ({
   };
 
   const filmFilterContextValue: FilmFilterContextValue = {
-    filmList: filmList!,
+    filmList: filmList,
     filterData: filterData,
     isFilmListFetching,
     isFilmListError,
