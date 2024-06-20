@@ -1,5 +1,4 @@
 import { validateResponse } from "@api/validateResponse";
-import { KP_TOKEN } from "@constants/*";
 import { z } from "zod";
 
 const API_URL = "https://api.kinopoisk.dev/v1.4";
@@ -89,7 +88,7 @@ export function fetchFilmList({
   const requestUrl = requestPath + queryParams;
   return fetch(requestUrl, {
     headers: {
-      "X-API-KEY": `${KP_TOKEN}`,
+      "X-API-KEY": `${process.env.X_API_KEY}`,
     },
   })
     .then(validateResponse)
@@ -100,7 +99,7 @@ export function fetchFilmList({
 export function fetchFilmById(id: number) {
   return fetch(`${API_URL}/movie/${id}`, {
     headers: {
-      "X-API-KEY": `${KP_TOKEN}`,
+      "X-API-KEY": `${process.env.X_API_KEY}`,
     },
   })
     .then(validateResponse)

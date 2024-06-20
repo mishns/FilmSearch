@@ -3,10 +3,17 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
+const dotenv = require('dotenv');
 
 const NODE_ENV = process.env.NODE_ENV;
 const IS_DEV = process.env.NODE_ENV;
 const IS_PROD = process.env.NODE_ENV;
+
+const env = dotenv.config().parsed;
+const envKeys = Object.keys(env).reduce((prev, next) => {
+  prev[`process.env.${next}`] = JSON.stringify(env[next]);
+  return prev;
+}, {});
 
 module.exports = {
   entry: ["./src/main.tsx"],
@@ -64,6 +71,7 @@ module.exports = {
       filename: "index.html",
     }),
     new ReactRefreshWebpackPlugin(),
+    new webpack.DefinePlugin(envKeys)
   ],
   resolve: {
     extensions: [".tsx", ".ts", ".js"],

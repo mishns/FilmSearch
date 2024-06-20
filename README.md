@@ -1,12 +1,18 @@
+## Usage
+App uses X_API_KEY token stored in .env file. 
+You need to create .env file with token.
+Token format: 
+```
+X_API_KEY = XXXXXXX-XXXXXXX-XXXXXXX-XXXXXXX
+```
+
+Otherwise, app can't get films info. You can get free token at https://api.kinopoisk.dev/documentation#/.
 ## Install
 
 ```sh
 npm install
 ```
 
-## Usage
-
-You need to insert your kinopoisk token to constants.ts file to use the app. Otherwise, app can't get films info. You can get free token at https://api.kinopoisk.dev/documentation#/.
 
 
 Dev mode:
