@@ -47,13 +47,13 @@ export const filmListSchema = z.object({
 export type FilmList = z.infer<typeof filmListSchema>;
 
 interface FetchFilmListI {
-  page: string;
-  limit: string;
+  page: number;
+  limit: number;
   sortField: "rating.kp" | "id";
   sortType: "1" | "-1";
   genres: Array<string>;
-  rating: { min: string; max: string };
-  years: { first: string; last: string };
+  rating: { min: number; max: number };
+  years: { first: number; last: number };
 }
 export function fetchFilmList({
   page,

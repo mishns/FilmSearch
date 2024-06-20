@@ -1,8 +1,9 @@
-import { default as React, FC } from "react";
+import { default as React, FC, useContext } from "react";
 import styles from "./filterformpage.css";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { FilmFilterContext } from "@src/contexts/FilmFilterContext";
 
 const today = new Date();
 const currYear = today.getFullYear();
@@ -20,23 +21,9 @@ const filterFormSchema = z.object({
 });
 export type FilterForm = z.infer<typeof filterFormSchema>;
 
-interface FilterFormPageProps {
-  handleFilterSubmit: ({
-    actionMovie,
-    thriller,
-    detective,
-    biography,
-    documentary,
-    minRating,
-    maxRating,
-    firstYear,
-    lastYear,
-  }: FilterForm) => void;
-}
+export const FilterFormPage: FC = () => {
+  const { filterData, handleFilterSubmit } = useContext(FilmFilterContext);
 
-export const FilterFormPage: FC<FilterFormPageProps> = ({
-  handleFilterSubmit,
-}) => {
   const {
     register,
     handleSubmit,
@@ -60,16 +47,27 @@ export const FilterFormPage: FC<FilterFormPageProps> = ({
             type="checkbox"
             id="actionMovie"
             {...register("actionMovie")}
+            defaultChecked={filterData.genres.actionMovie}
           />
           <label htmlFor="actionMovie">Боевик</label>
         </div>
 
         <div className={styles.genreOption}>
-          <input type="checkbox" id="thriller" {...register("thriller")} />
+          <input
+            type="checkbox"
+            id="thriller"
+            {...register("thriller")}
+            defaultChecked={filterData.genres.thriller}
+          />
           <label htmlFor="thriller">Триллер</label>
         </div>
         <div className={styles.genreOption}>
-          <input type="checkbox" id="detective" {...register("detective")} />
+          <input
+            type="checkbox"
+            id="detective"
+            {...register("detective")}
+            defaultChecked={filterData.genres.detective}
+          />
           <label htmlFor="detective">Детектив</label>
         </div>
         <div className={styles.genreOption}>
@@ -77,11 +75,17 @@ export const FilterFormPage: FC<FilterFormPageProps> = ({
             type="checkbox"
             id="documentary"
             {...register("documentary")}
+            defaultChecked={filterData.genres.documentary}
           />
           <label htmlFor="documentary">Документальный</label>
         </div>
         <div className={styles.genreOption}>
-          <input type="checkbox" id="biography" {...register("biography")} />
+          <input
+            type="checkbox"
+            id="biography"
+            {...register("biography")}
+            defaultChecked={filterData.genres.biography}
+          />
           <label htmlFor="biography">Биография</label>
         </div>
       </fieldset>
@@ -96,7 +100,7 @@ export const FilterFormPage: FC<FilterFormPageProps> = ({
           id="minRating"
           min={1}
           max={10}
-          defaultValue={1}
+          defaultValue={filterData.rating.minRating}
           {...register("minRating")}
         />
 
@@ -108,7 +112,7 @@ export const FilterFormPage: FC<FilterFormPageProps> = ({
           id="maxRating"
           min={1}
           max={10}
-          defaultValue={10}
+          defaultValue={filterData.rating.maxRating}
           {...register("maxRating")}
         />
         <span role="alert">{errors.maxRating?.message?.toString()}</span>
@@ -124,7 +128,7 @@ export const FilterFormPage: FC<FilterFormPageProps> = ({
           id="firstYear"
           min={1990}
           max={currYear}
-          defaultValue={1990}
+          defaultValue={filterData.years.firstYear}
           {...register("firstYear")}
         />
 
@@ -136,7 +140,7 @@ export const FilterFormPage: FC<FilterFormPageProps> = ({
           id="lastYear"
           min={1990}
           max={currYear}
-          defaultValue={currYear}
+          defaultValue={filterData.years.lastYear}
           {...register("lastYear")}
         />
         <span role="alert">{errors.lastYear?.message?.toString()}</span>
