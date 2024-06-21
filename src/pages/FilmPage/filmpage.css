@@ -20,10 +20,6 @@
   height: 100%;
 }
 
-.filmName {
-  color: var(--color-accent);
-}
-
 .filmGenres {
   white-space: pre;
 }

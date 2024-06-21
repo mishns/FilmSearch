@@ -10,12 +10,18 @@
 }
 
 .filmName {
-  color: var(--color-accent);
+  color: var(--color-main);
+}
+
+.filmCardHeader {
+  display: flex;
+  justify-content: space-between;
 }
 
 .filmInfo {
   display: flex;
   flex-direction: column;
+  width: 100%;
   gap: 5px;
   padding: 20px;
 }
@@ -26,4 +32,26 @@
 
 .moreLink {
   color: var(--color-link);
+}
+
+.favButton {
+  width: 40px;
+  height: 40px;
+  background-color: transparent;
+  border-color: transparent;
+  outline: none;
+}
+
+.favouriteIcon {
+  fill: var(--color-secondary);
+  stroke: var(--color-accent);
+  transition: fill 0.3 ease-in-out;
+}
+
+.favouriteIcon:hover {
+  fill: var(--color-accent);
+}
+
+.favButton_active .favouriteIcon {
+  fill: var(--color-accent);
 }

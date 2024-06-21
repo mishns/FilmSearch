@@ -41,9 +41,9 @@ export const FilmPage: FC = () => {
       film.name ?? film.alternativeName ?? film.enName ?? "Без названия";
     filmYear = String(film.year) ?? "Год неизвестен";
     filmRating = rating.kp ?? 0;
+    posterUrl = film.poster.url ?? film.poster.previewUrl ?? defaultPosterUrl;
     filmDescription =
       film.description ?? film.shortDescription ?? "Без описания";
-    posterUrl = film.poster.url ?? film.poster.previewUrl ?? defaultPosterUrl;
   }
 
   return (

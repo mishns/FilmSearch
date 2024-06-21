@@ -9,6 +9,7 @@ import { FilterForm } from "@pages/FilterFormPage";
 import { queryClient } from "@api/queryClient";
 import { useQuery } from "@tanstack/react-query";
 import { fetchFilmList, FilmList } from "@api/Film";
+import { useLocalStorage } from "@uidotdev/usehooks";
 
 const today = new Date();
 const currYear = today.getFullYear();
@@ -63,11 +64,16 @@ interface FilmFilterContextProviderProps {
 type FilmFilterContextValue = {
   filmList: FilmList | undefined;
   filterData: FilmFilter;
+  isFavFilter: boolean;
   isFilmListFetching: boolean;
   isFilmListError: boolean;
   handleFilterSubmit: (formData: FilterForm) => void;
   handlePrevPageClick: () => void;
   handleNextPageClick: () => void;
+  handleAddFavourite: (id: number) => void;
+  handleDeleteFavourite: (id: number) => void;
+  setIsFavFilter: (isFavFilter: boolean) => void;
+  resetPage: () => void;
 };
 
 export const FilmFilterContext = createContext({} as FilmFilterContextValue);
@@ -97,6 +103,11 @@ export const FilmFilterContextProvider: FC<FilmFilterContextProviderProps> = ({
   const [genres, setGenres] = useState<Genres>(defaultGenres);
   const [rating, setRating] = useState<Rating>(defaultRating);
   const [years, setYears] = useState<Years>(defaultYears);
+  const [favFilmsIds, setFavFilmsIds] = useLocalStorage<Array<number>>(
+    "favFilmsIds",
+    [],
+  );
+  const [isFavFilter, setIsFavFilter] = useState<boolean>(false);
 
   const {
     data: filmList,
@@ -113,8 +124,11 @@ export const FilmFilterContextProvider: FC<FilmFilterContextProviderProps> = ({
           genres: getGenresRuList(genres),
           rating: { min: rating.minRating, max: rating.maxRating },
           years: { first: years.firstYear, last: years.lastYear },
+          ids: favFilmsIds,
+          isFavFilter,
         }),
       queryKey: ["filmList"],
+      enabled: !isFavFilter || (isFavFilter && Boolean(favFilmsIds.length)),
     },
     queryClient,
   );
@@ -145,9 +159,25 @@ export const FilmFilterContextProvider: FC<FilmFilterContextProviderProps> = ({
     setPage(page + 1);
   }
 
+  function handleAddFavourite(id: number) {
+    const newFavFilmsIds = new Set(Object.values(favFilmsIds));
+    newFavFilmsIds.add(id);
+    setFavFilmsIds(Array.from(newFavFilmsIds));
+  }
+
+  function handleDeleteFavourite(id: number) {
+    const newFavFilmsIds = new Set(favFilmsIds);
+    newFavFilmsIds.delete(id);
+    setFavFilmsIds(Array.from(newFavFilmsIds));
+  }
+
+  function resetPage() {
+    setPage(1);
+  }
+
   useEffect(() => {
     queryClient.invalidateQueries({ queryKey: ["filmList"] });
-  }, [page, genres, rating, years]);
+  }, [page, genres, rating, years, isFavFilter]);
 
   const filterData: FilmFilter = {
     page,
@@ -159,11 +189,16 @@ export const FilmFilterContextProvider: FC<FilmFilterContextProviderProps> = ({
   const filmFilterContextValue: FilmFilterContextValue = {
     filmList: filmList,
     filterData: filterData,
+    isFavFilter,
     isFilmListFetching,
     isFilmListError,
     handleFilterSubmit,
     handlePrevPageClick,
     handleNextPageClick,
+    handleAddFavourite,
+    handleDeleteFavourite,
+    setIsFavFilter,
+    resetPage,
   };
 
   return (

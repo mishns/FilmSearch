@@ -54,6 +54,8 @@ interface FetchFilmListI {
   genres: Array<string>;
   rating: { min: number; max: number };
   years: { first: number; last: number };
+  ids: Array<number>;
+  isFavFilter: boolean;
 }
 export function fetchFilmList({
   page,
@@ -63,6 +65,8 @@ export function fetchFilmList({
   genres,
   rating,
   years,
+  ids: filterIds,
+  isFavFilter,
 }: FetchFilmListI): Promise<FilmList> {
   const requestPath = `${API_URL}/movie?`;
   const selectFields = [
@@ -83,9 +87,13 @@ export function fetchFilmList({
     "rating.kp": `${rating.min}-${rating.max}`,
   });
   genres.forEach(genre => queryParams.append("genres.name", genre));
+  if (isFavFilter) {
+    filterIds.forEach(id => queryParams.append("id", id.toString()));
+  }
   selectFields.forEach(field => queryParams.append(field[0], field[1]));
 
   const requestUrl = requestPath + queryParams;
+
   return fetch(requestUrl, {
     headers: {
       "X-API-KEY": `${process.env.X_API_KEY}`,

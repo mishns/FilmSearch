@@ -5,9 +5,8 @@ import { Link } from "react-router-dom";
 export const Header: FC = () => {
   return (
     <header className={styles.header}>
-      <div className="container">
-        <Link to="/">Главная</Link>
-      </div>
+      <Link to="/">Главная</Link>
+      <Link to={"/favourites"}>Избранное</Link>
     </header>
   );
 };
