@@ -4,6 +4,10 @@
   box-shadow: var(--box-shadow);
 }
 
+.filmPage {
+  height: 400px;
+}
+
 .filmPoster {
   min-width: 200px;
   height: 100%;
@@ -26,8 +30,26 @@
   padding: 20px;
 }
 
+.filmPoster {
+  min-width: 200px;
+  height: 100%;
+}
+
+.filmGenres {
+  white-space: pre;
+}
+
+.filmDescr {
+  white-space: wrap;
+  overflow: scroll;
+}
+
 .filmYear {
   margin-bottom: auto;
+}
+
+.filmPage .filmYear {
+  margin-bottom: 0;
 }
 
 .moreLink {
@@ -45,7 +67,7 @@
 .favouriteIcon {
   fill: var(--color-secondary);
   stroke: var(--color-accent);
-  transition: fill 0.3 ease-in-out;
+  transition: fill 0.3s ease-in-out;
 }
 
 .favouriteIcon:hover {

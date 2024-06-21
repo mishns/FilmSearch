@@ -54,6 +54,7 @@ export const FilmListPage = () => {
               key={film.id}
               film={film}
               isFavourite={favFilmsIds.includes(film.id)}
+              isFilmPage={false}
             />
           );
         })

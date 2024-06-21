@@ -74,6 +74,7 @@ type FilmFilterContextValue = {
   handleDeleteFavourite: (id: number) => void;
   setIsFavFilter: (isFavFilter: boolean) => void;
   resetPage: () => void;
+  favFilmsIds: Array<number>;
 };
 
 export const FilmFilterContext = createContext({} as FilmFilterContextValue);
@@ -199,6 +200,7 @@ export const FilmFilterContextProvider: FC<FilmFilterContextProviderProps> = ({
     handleDeleteFavourite,
     setIsFavFilter,
     resetPage,
+    favFilmsIds,
   };
 
   return (

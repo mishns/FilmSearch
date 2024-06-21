@@ -1,34 +1,56 @@
 import { default as React, FC, useContext } from "react";
 import styles from "./filmcard.css";
-import { FilmCardInfo } from "@api/Film";
+import { Film } from "@api/Film";
 import defaultPosterUrl from "@assets/img/no-poster.jpg";
 import { Link } from "react-router-dom";
 import { FilmFilterContext } from "@src/contexts/FilmFilterContext";
 import classNames from "classnames";
 
 interface FilmCardProps {
-  film: FilmCardInfo;
+  film: Film;
   isFavourite: boolean;
+  isFilmPage: boolean;
 }
 
-export const FilmCard: FC<FilmCardProps> = ({ film, isFavourite }) => {
+export const FilmCard: FC<FilmCardProps> = ({
+  film,
+  isFavourite,
+  isFilmPage,
+}) => {
   const { handleAddFavourite, handleDeleteFavourite } =
     useContext(FilmFilterContext);
-  const { rating } = film;
 
-  const filmName: string =
-    film.name ?? film.alternativeName ?? film.enName ?? "Без названия";
-  const filmYear: string = String(film.year) ?? "Год неизвестен";
+  const {
+    id,
+    name,
+    alternativeName,
+    enName,
+    poster,
+    rating,
+    year,
+    genres,
+    description,
+    shortDescription,
+  } = film;
+
+  const filmName: string = name ?? alternativeName ?? enName ?? "Без названия";
+  const filmYear: string = String(year) ?? "Год неизвестен";
   const filmRating: number = rating.kp ?? 0;
-  const posterUrl =
-    film.poster.url ?? film.poster.previewUrl ?? defaultPosterUrl;
+  const posterUrl = poster.url ?? poster.previewUrl ?? defaultPosterUrl;
+  const filmDescription = description ?? shortDescription ?? "Без описания";
+
+  const filmCardCls = classNames({
+    [`${styles.filmCard}`]: true,
+    [`${styles.filmPage}`]: isFilmPage,
+  });
 
   const favButtonCls = classNames({
     [`${styles.favButton}`]: true,
     [`${styles.favButton_active}`]: isFavourite,
   });
+
   return (
-    <div className={styles.filmCard}>
+    <div className={filmCardCls}>
       <img
         className={styles.filmPoster}
         src={posterUrl}
@@ -38,13 +60,12 @@ export const FilmCard: FC<FilmCardProps> = ({ film, isFavourite }) => {
       <div className={styles.filmInfo}>
         <div className={styles.filmCardHeader}>
           <h2 className={styles.filmName}>{filmName}</h2>
-
           <button
             className={favButtonCls}
             onClick={
               isFavourite
-                ? () => handleDeleteFavourite(film.id)
-                : () => handleAddFavourite(film.id)
+                ? () => handleDeleteFavourite(id)
+                : () => handleAddFavourite(id)
             }
           >
             <svg
@@ -63,9 +84,24 @@ export const FilmCard: FC<FilmCardProps> = ({ film, isFavourite }) => {
         </div>
         <span>Рейтинг: {filmRating}</span>
         <span className={styles.filmYear}>Год: {filmYear}</span>
-        <Link to={`/${film.id}`} className={styles.moreLink}>
-          Подробнее
-        </Link>
+        <div className={styles.filmGenres}>
+          {isFilmPage && genres && (
+            <>
+              <span>Жанры: </span>
+              {genres.map((genre, index) => (
+                <span key={index}>{`${genre.name} `}</span>
+              ))}
+            </>
+          )}
+        </div>
+        {isFilmPage && (
+          <span className={styles.filmDescr}>Описание: {filmDescription}</span>
+        )}
+        {!isFilmPage && (
+          <Link to={`/${id}`} className={styles.moreLink}>
+            Подробнее
+          </Link>
+        )}
       </div>
     </div>
   );

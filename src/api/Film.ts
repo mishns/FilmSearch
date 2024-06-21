@@ -24,21 +24,14 @@ export const filmSchema = z.object({
   year: z.number().nullable(),
   rating: filmRatingSchema,
   poster: filmPosterSchema,
-  genres: genresSchema,
-  description: z.string().nullable(),
-  shortDescription: z.string().nullable(),
+  genres: genresSchema.optional(),
+  description: z.string().nullable().optional(),
+  shortDescription: z.string().nullable().optional(),
 });
 export type Film = z.infer<typeof filmSchema>;
 
-export const filmCardInfoSchema = filmSchema.omit({
-  genres: true,
-  description: true,
-  shortDescription: true,
-});
-export type FilmCardInfo = z.infer<typeof filmCardInfoSchema>;
-
 export const filmListSchema = z.object({
-  docs: z.array(filmCardInfoSchema),
+  docs: z.array(filmSchema),
   total: z.number(),
   limit: z.number(),
   page: z.number(),
