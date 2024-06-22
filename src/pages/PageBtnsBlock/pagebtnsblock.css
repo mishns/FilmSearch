@@ -1,0 +1,9 @@
+.pageNavBtns {
+  display: flex;
+  justify-content: space-between;
+}
+
+.pageBtn {
+  width: 100px;
+  height: 50px;
+}

@@ -63,10 +63,12 @@ interface FilmFilterContextProviderProps {
 
 type FilmFilterContextValue = {
   filmList: FilmList | undefined;
+  favFilmsIds: Array<number>;
   filterData: FilmFilter;
   isFavFilter: boolean;
   isFilmListFetching: boolean;
   isFilmListError: boolean;
+  isEmptyFavouritesPage: boolean;
   handleFilterSubmit: (formData: FilterForm) => void;
   handlePrevPageClick: () => void;
   handleNextPageClick: () => void;
@@ -74,7 +76,6 @@ type FilmFilterContextValue = {
   handleDeleteFavourite: (id: number) => void;
   setIsFavFilter: (isFavFilter: boolean) => void;
   resetPage: () => void;
-  favFilmsIds: Array<number>;
 };
 
 export const FilmFilterContext = createContext({} as FilmFilterContextValue);
@@ -134,6 +135,10 @@ export const FilmFilterContextProvider: FC<FilmFilterContextProviderProps> = ({
     queryClient,
   );
 
+  useEffect(() => {
+    queryClient.invalidateQueries({ queryKey: ["filmList"] });
+  }, [page, genres, rating, years, isFavFilter]);
+
   function handleFilterSubmit(formData: FilterForm) {
     const newGenres: Genres = { ...genres };
     for (const key in formData) {
@@ -176,10 +181,6 @@ export const FilmFilterContextProvider: FC<FilmFilterContextProviderProps> = ({
     setPage(1);
   }
 
-  useEffect(() => {
-    queryClient.invalidateQueries({ queryKey: ["filmList"] });
-  }, [page, genres, rating, years, isFavFilter]);
-
   const filterData: FilmFilter = {
     page,
     genres,
@@ -187,12 +188,16 @@ export const FilmFilterContextProvider: FC<FilmFilterContextProviderProps> = ({
     years,
   };
 
+  const isEmptyFavouritesPage = isFavFilter && !favFilmsIds.length;
+
   const filmFilterContextValue: FilmFilterContextValue = {
     filmList: filmList,
+    favFilmsIds,
     filterData: filterData,
     isFavFilter,
     isFilmListFetching,
     isFilmListError,
+    isEmptyFavouritesPage,
     handleFilterSubmit,
     handlePrevPageClick,
     handleNextPageClick,
@@ -200,7 +205,6 @@ export const FilmFilterContextProvider: FC<FilmFilterContextProviderProps> = ({
     handleDeleteFavourite,
     setIsFavFilter,
     resetPage,
-    favFilmsIds,
   };
 
   return (
