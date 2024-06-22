@@ -135,6 +135,33 @@ export const FilmFilterContextProvider: FC<FilmFilterContextProviderProps> = ({
     },
     queryClient,
   );
+  const isDataEnd = filmList ? filmList.pages <= page : true;
+  const isEmptyFavouritesPage = isFavFilter && !favFilmsIds.length;
+
+  const filterData: FilmFilter = {
+    page,
+    genres,
+    rating,
+    years,
+  };
+
+  const filmFilterContextValue: FilmFilterContextValue = {
+    filmList: filmList,
+    favFilmsIds,
+    filterData: filterData,
+    isFavFilter,
+    isFilmListFetching,
+    isFilmListError,
+    isDataEnd,
+    isEmptyFavouritesPage,
+    handleFilterSubmit,
+    handlePrevPageClick,
+    handleNextPageClick,
+    handleAddFavourite,
+    handleDeleteFavourite,
+    setIsFavFilter,
+    resetPage,
+  };
 
   useEffect(() => {
     queryClient.invalidateQueries({ queryKey: ["filmList"] });
@@ -181,34 +208,6 @@ export const FilmFilterContextProvider: FC<FilmFilterContextProviderProps> = ({
   function resetPage() {
     setPage(1);
   }
-
-  const filterData: FilmFilter = {
-    page,
-    genres,
-    rating,
-    years,
-  };
-
-  const isDataEnd = filmList ? filmList.pages <= page : true;
-  const isEmptyFavouritesPage = isFavFilter && !favFilmsIds.length;
-
-  const filmFilterContextValue: FilmFilterContextValue = {
-    filmList: filmList,
-    favFilmsIds,
-    filterData: filterData,
-    isFavFilter,
-    isFilmListFetching,
-    isFilmListError,
-    isDataEnd,
-    isEmptyFavouritesPage,
-    handleFilterSubmit,
-    handlePrevPageClick,
-    handleNextPageClick,
-    handleAddFavourite,
-    handleDeleteFavourite,
-    setIsFavFilter,
-    resetPage,
-  };
 
   return (
     <FilmFilterContext.Provider value={filmFilterContextValue}>
