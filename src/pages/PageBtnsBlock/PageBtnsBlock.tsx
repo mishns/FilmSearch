@@ -6,6 +6,7 @@ export const PageBtnsBlock: FC = () => {
   const {
     filterData,
     isFilmListFetching,
+    isDataEnd,
     isEmptyFavouritesPage,
     handlePrevPageClick,
     handleNextPageClick,
@@ -24,7 +25,7 @@ export const PageBtnsBlock: FC = () => {
       </button>
       <button
         className={styles.pageBtn}
-        disabled={isFilmListFetching || isEmptyFavouritesPage}
+        disabled={isFilmListFetching || isEmptyFavouritesPage || isDataEnd}
         onClick={handleNextPageClick}
       >
         Следующая

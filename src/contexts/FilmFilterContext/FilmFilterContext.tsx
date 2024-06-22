@@ -68,6 +68,7 @@ type FilmFilterContextValue = {
   isFavFilter: boolean;
   isFilmListFetching: boolean;
   isFilmListError: boolean;
+  isDataEnd: boolean;
   isEmptyFavouritesPage: boolean;
   handleFilterSubmit: (formData: FilterForm) => void;
   handlePrevPageClick: () => void;
@@ -188,6 +189,7 @@ export const FilmFilterContextProvider: FC<FilmFilterContextProviderProps> = ({
     years,
   };
 
+  const isDataEnd = filmList ? filmList.pages <= page : true;
   const isEmptyFavouritesPage = isFavFilter && !favFilmsIds.length;
 
   const filmFilterContextValue: FilmFilterContextValue = {
@@ -197,6 +199,7 @@ export const FilmFilterContextProvider: FC<FilmFilterContextProviderProps> = ({
     isFavFilter,
     isFilmListFetching,
     isFilmListError,
+    isDataEnd,
     isEmptyFavouritesPage,
     handleFilterSubmit,
     handlePrevPageClick,
