@@ -2,19 +2,20 @@ import { default as React, useContext } from "react";
 import styles from "./filmlistpage.css";
 import { FilmCard } from "@ui/FilmCard";
 import { FilmFilterContext } from "@src/contexts/FilmFilterContext";
-import useLocalStorageState from "use-local-storage-state";
 import { PageBtnsBlock } from "@pages/PageBtnsBlock";
 
 export const FilmListPage = () => {
   const {
     filmList,
+    favFilmsIds,
     isFilmListFetching,
     isFilmListError,
     isEmptyFavouritesPage,
   } = useContext(FilmFilterContext);
-  const [favFilmsIds] = useLocalStorageState<Array<number>>("favFilmsIds", {
-    defaultValue: [],
-  });
+
+  if (!filmList?.docs.length || isEmptyFavouritesPage) {
+    return <span>Ничего не найдено</span>;
+  }
 
   return (
     <div className={styles.filmList}>

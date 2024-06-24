@@ -89,7 +89,7 @@ export const FilterFormPage: FC = () => {
 
       <fieldset>
         <legend className={styles.legend}>Рейтинг</legend>
-        <label htmlFor="minRating" className="minRating">
+        <label htmlFor="minRating" className={styles.minRating}>
           От
         </label>
         <input
@@ -120,7 +120,7 @@ export const FilterFormPage: FC = () => {
           })}
         />
 
-        <label htmlFor="maxRating" className="maxRating">
+        <label htmlFor="maxRating" className={styles.maxRating}>
           До
         </label>
         <input
@@ -154,7 +154,7 @@ export const FilterFormPage: FC = () => {
 
       <fieldset>
         <legend className={styles.legend}>Год</legend>
-        <label htmlFor="firstYear" className="firstYear">
+        <label htmlFor="firstYear" className={styles.firstYear}>
           От
         </label>
         <input
@@ -185,7 +185,7 @@ export const FilterFormPage: FC = () => {
           })}
         />
 
-        <label htmlFor="lastYear" className="lastYear">
+        <label htmlFor="lastYear" className={styles.lastYear}>
           До
         </label>
         <input
