@@ -13,7 +13,10 @@ export const FilmListPage = () => {
     isEmptyFavouritesPage,
   } = useContext(FilmFilterContext);
 
-  if (!filmList?.docs.length || isEmptyFavouritesPage) {
+  if (
+    (!filmList?.docs.length || isEmptyFavouritesPage) &&
+    !(isFilmListFetching || isFilmListError)
+  ) {
     return <span>Ничего не найдено</span>;
   }
 
@@ -21,9 +24,9 @@ export const FilmListPage = () => {
     <div className={styles.filmList}>
       <PageBtnsBlock />
       {isFilmListError ? (
-        <span>Film list loading error</span>
+        <span>Ошибка загрузки списка</span>
       ) : isFilmListFetching ? (
-        <span>Loading...</span>
+        <span>Загрузка...</span>
       ) : isEmptyFavouritesPage ? null : (
         filmList!.docs.map(film => {
           return (
